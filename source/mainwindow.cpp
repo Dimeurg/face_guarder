@@ -12,6 +12,9 @@
 
 #include <iostream>
 
+#include "facepoints.h"
+#include "jsondb.h"
+
 using namespace dlib;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -45,13 +48,19 @@ MainWindow::MainWindow(QWidget *parent)
             shapes.push_back(pose_model(img, faces[i]));
         }
 
+        JsonDB db("file_test.json");
         cv_image<bgr_pixel> img_res(temp_img);
         if(!shapes.empty()){
+            FacePoints facePoints;
             std::vector<cv::Point2l> points;
             for(int i = 0; i < 64; ++i){
                 auto &part = shapes[0].part(i);
                 points.emplace_back(part.x(), part.y());
+                facePoints.addPoint(cv::Point2l(part.x(), part.y()));
             }
+
+            auto test = facePoints.toJson();
+            db.save(test);
             for(cv::Point2l& point: points){
                 cv::circle(temp_img, point, 2, cv::Scalar(0,0,255), -1);
             }

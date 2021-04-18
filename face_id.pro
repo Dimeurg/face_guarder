@@ -9,10 +9,18 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    source/dbmanager.cpp \
+    source/dbobject.cpp \
+    source/facepoints.cpp \
+    source/jsondb.cpp \
     source/main.cpp \
     source/mainwindow.cpp
 
 HEADERS += \
+    source/dbmanager.h \
+    source/dbobject.h \
+    source/facepoints.h \
+    source/jsondb.h \
     source/mainwindow.h
 
 DEFINES += PRJ_PATH='\\"$${PWD}\\"'
