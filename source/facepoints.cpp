@@ -42,3 +42,13 @@ void FacePoints::addPoint(cv::Point2l point)
 {
     points.emplace_back(point);
 }
+
+std::vector<cv::Point2l>::iterator FacePoints::begin()
+{
+    return points.begin();
+}
+
+std::vector<cv::Point2l>::iterator FacePoints::end()
+{
+    return points.end();
+}

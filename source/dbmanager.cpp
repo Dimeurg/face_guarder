@@ -10,7 +10,7 @@ DBManager::~DBManager()
 
 }
 
-void DBManager::save(const QJsonObject &object)
+void DBManager::save(const DBObject &object)
 {
     Q_UNUSED(object);
 }
