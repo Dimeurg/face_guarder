@@ -4,8 +4,10 @@
 #include <QPushButton>
 #include <QLineEdit>
 
-AdderCustomer::AdderCustomer(QWidget *parent)
-    : QWidget(parent)
+#include "face.h"
+
+AdderCustomer::AdderCustomer(std::shared_ptr<DBManager> db, QWidget *parent)
+    : db(db), QWidget(parent)
 {
     QVBoxLayout * layout = new QVBoxLayout(this);
     setLayout(layout);
@@ -21,7 +23,7 @@ AdderCustomer::AdderCustomer(QWidget *parent)
 
 void AdderCustomer::onAddFrame(std::shared_ptr<std::vector<FacePoints>> pointSet)
 {
-    pointsSets.push_back(pointSet);
+    pointsSets.push_back(pointSet->at(0));
     emit changedFramesCount(QString("frame counts: ") + QString::number(pointsSets.size()));
 }
 
@@ -33,7 +35,10 @@ void AdderCustomer::onRestoreFrames()
 
 void AdderCustomer::onAddCustomer(QString name)
 {
-    //if(currentFace.isValid()){
-    //    db.save(currentFace);
-    //}
+    if(db){
+        Face newCustomer(name, pointsSets);
+        if(newCustomer.isValid()){
+            db->save(newCustomer);
+        }
+    }
 }

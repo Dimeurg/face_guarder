@@ -6,12 +6,13 @@
 #include <QLineEdit>
 
 #include "facepoints.h"
+#include "dbmanager.h"
 
 class AdderCustomer : public QWidget
 {
     Q_OBJECT
 public:
-    AdderCustomer(QWidget *parent = nullptr);
+    AdderCustomer(std::shared_ptr<DBManager> db, QWidget *parent = nullptr);
 
 signals:
     void changedFramesCount(QString count);
@@ -26,7 +27,8 @@ private:
     QPushButton bAddFrame;
     QPushButton bAddCustomer;
 
-    std::vector<std::shared_ptr<std::vector<FacePoints>>> pointsSets;
+    std::vector<FacePoints> pointsSets;
+    std::shared_ptr<DBManager> db;
 };
 
 #endif // ADDERCUSTOMER_H

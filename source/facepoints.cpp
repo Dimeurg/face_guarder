@@ -23,7 +23,7 @@ QJsonObject FacePoints::toJson() const
             JsonPoint["y"] = point.y;
             outputArray.append(JsonPoint);
         }
-        result["points"] = outputArray;
+        result["points set"] = outputArray;
     }
     return result;
 }

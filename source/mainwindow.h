@@ -39,14 +39,14 @@ private:
     QGridLayout *layout;
     CameraManager camera;
     Recognizer recognizer;
-    AdderCustomer adderCustomer;
     QLabel lbCameraFrame;
-    bool recognizerOn;
     cv::Mat currentFrame;
     FacePoints currentFace;
-    JsonDB db;
+    std::shared_ptr<JsonDB> db;
+    AdderCustomer adderCustomer;
     std::shared_ptr<std::vector<FacePoints>> currentPointsSet;
     QLineEdit lCustomerName;
-    bool cameraIsWorking = false;
+    bool recognizerOn;
+    bool cameraIsWorking;
 };
 #endif // MAINWINDOW_H

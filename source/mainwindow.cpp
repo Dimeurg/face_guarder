@@ -23,7 +23,7 @@
 using namespace dlib;
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), recognizerOn(true)
+    : QMainWindow(parent),  db(std::make_shared<JsonDB>()), adderCustomer(db), recognizerOn(true), cameraIsWorking(false)
 {
 
     qRegisterMetaType< cv::Mat >("cv::Mat");
@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     const QString projectPath = PRJ_PATH;
     const QString jFileName = "faces.json";
     const QString jFilePath = projectPath + "/tools/faces/" + jFileName;
-    db.setFileName(jFilePath);
+    db->setFileName(jFilePath);
 
     resize(1400, 700);
     QWidget * centralWidget = new QWidget(this);

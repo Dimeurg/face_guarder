@@ -25,7 +25,6 @@ Recognizer::Recognizer()
 
     connect(&thread, &QThread::started, this, &Recognizer::process);
     connect(this, &Recognizer::finished, &thread, &QThread::quit);
-    //connect(this, &Recognizer::finished, this, &Recognizer::deleteLater);
 
     moveToThread(&thread);
 }
