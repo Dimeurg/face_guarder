@@ -4,6 +4,7 @@
 #include "dbmanager.h"
 #include <QFile>
 #include <QJsonObject>
+#include "face.h"
 
 class QJsonDocument;
 
@@ -15,6 +16,7 @@ public:
     ~JsonDB();
     void setFileName(const QString& fileName);
     virtual void save(const DBObject& object) override;
+    std::vector<Face> get();
 
 private:
     void readJsonFile();

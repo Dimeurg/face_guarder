@@ -6,6 +6,7 @@
 #include "cameramanager.h"
 #include "recognizer.h"
 #include "addercustomer.h"
+#include "faceidentifier.h"
 
 #include <QLabel>
 
@@ -30,6 +31,7 @@ public slots:
     void onFrameRecognized(cv::Mat frame, std::shared_ptr<ProcessedFaces> processedFaces);
     void onAddNewCustomer();
     void onAddNewFrame();
+    void onFoundCustomer(QString name);
 private:
     void drawFrame(const cv::Mat frame);
     void drawCircles(cv::Mat frame, std::shared_ptr<std::vector<FacePoints>> facePoints);
@@ -44,8 +46,10 @@ private:
     FacePoints currentFace;
     std::shared_ptr<JsonDB> db;
     AdderCustomer adderCustomer;
+    FaceIdentifier faceIdentifier;
     std::shared_ptr<std::vector<FacePoints>> currentPointsSet;
     QLineEdit lCustomerName;
+    QLabel lFoundName;
     bool recognizerOn;
     bool cameraIsWorking;
 };

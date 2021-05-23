@@ -14,6 +14,7 @@ SOURCES += \
     source/dbmanager.cpp \
     source/dbobject.cpp \
     source/face.cpp \
+    source/faceidentifier.cpp \
     source/facepoints.cpp \
     source/jsondb.cpp \
     source/main.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     source/dbmanager.h \
     source/dbobject.h \
     source/face.h \
+    source/faceidentifier.h \
     source/facepoints.h \
     source/jsondb.h \
     source/mainwindow.h \

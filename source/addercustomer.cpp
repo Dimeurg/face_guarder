@@ -15,10 +15,12 @@ AdderCustomer::AdderCustomer(std::shared_ptr<DBManager> db, QWidget *parent)
     QPushButton * bAddFrame = new QPushButton("add frame", this);
     QPushButton * bAddCustomer = new QPushButton("add customer", this);
     QLineEdit * lCustomerName = new QLineEdit(this);
+    QLineEdit * lFoundName = new QLineEdit(this);
 
     layout->addWidget(lCustomerName);
     layout->addWidget(bAddFrame);
     layout->addWidget(bAddCustomer);
+    layout->addWidget(lFoundName);
 }
 
 void AdderCustomer::onAddFrame(std::shared_ptr<std::vector<FacePoints>> pointSet)

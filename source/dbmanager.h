@@ -2,6 +2,7 @@
 #define DBMANAGER_H
 
 #include "dbobject.h"
+#include <vector>
 
 class DBManager
 {

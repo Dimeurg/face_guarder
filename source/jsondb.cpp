@@ -4,6 +4,7 @@
 #include "QJsonArray"
 
 #include "QDebug"
+#include "face.h"
 
 JsonDB::JsonDB()
 {
@@ -62,6 +63,28 @@ void JsonDB::save(const DBObject& object)
     else{
         qDebug() << "json db values isn't array";
     }
+}
+
+std::vector<Face> JsonDB::get()
+{
+    std::vector<Face> customers;
+    QJsonValue jValue = jObj.value("faces");
+    if(jValue.isArray()){
+        QJsonArray faces = jValue.toArray();
+        QJsonArray::Iterator it;
+        for(it = faces.begin(); it != faces.end(); ++it){
+            QJsonObject currentCustomerInfo = it->toObject();
+            Face customer;
+            customer.fromJson(currentCustomerInfo);
+            if(customer.isValid()){
+                customers.emplace_back(std::move(customer));
+            }
+        }
+    }
+    else{
+        qDebug() << "json db values isn't array";
+    }
+    return customers;
 }
 
 void JsonDB::readJsonFile()

@@ -15,6 +15,7 @@ public:
     virtual QJsonObject toJson() const override;
     virtual void fromJson(const QJsonObject& object) override;
     virtual bool isValid() const override;
+    std::pair<bool, double> compare(FacePoints& facePoints);
 
     void addPoint(cv::Point2l point);
     std::vector<cv::Point2l>::iterator begin();

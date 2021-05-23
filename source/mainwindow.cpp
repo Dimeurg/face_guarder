@@ -19,11 +19,12 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QDebug>
 
 using namespace dlib;
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent),  db(std::make_shared<JsonDB>()), adderCustomer(db), recognizerOn(true), cameraIsWorking(false)
+    : QMainWindow(parent),  db(std::make_shared<JsonDB>()), adderCustomer(db), recognizerOn(true), cameraIsWorking(false), faceIdentifier(db, 3000)
 {
 
     qRegisterMetaType< cv::Mat >("cv::Mat");
@@ -86,6 +87,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::addFrame, &adderCustomer, &AdderCustomer::onAddFrame);
     connect(this, &MainWindow::addCustomer, &adderCustomer, &AdderCustomer::onAddCustomer);
     connect(&adderCustomer, &AdderCustomer::changedFramesCount, lbFrameCounts, &QLabel::setText);
+    connect(&faceIdentifier, &FaceIdentifier::identified, this, &MainWindow::onFoundCustomer);
 
     lAddNewCustomer->addStretch();
     lAddNewCustomer->addWidget(&lCustomerName);
@@ -93,6 +95,7 @@ MainWindow::MainWindow(QWidget *parent)
     lAddNewCustomer->addWidget(bAddFrame);
     lAddNewCustomer->addWidget(bAddCustomer);
     lAddNewCustomer->addWidget(bRestoreFrames);
+    lAddNewCustomer->addWidget(&lFoundName);
     lAddNewCustomer->addStretch();
 
     QWidget * wAddNewCustomer = new QWidget();
@@ -137,10 +140,11 @@ void MainWindow::onFrameRecognized(cv::Mat frame, std::shared_ptr<ProcessedFaces
     currentPointsSet = getFacePoints(processedFaces);
     if(!currentPointsSet->empty()){
         currentFace = (*currentPointsSet)[0];
-        //identifyFace()
+        faceIdentifier.identify(currentFace);
     }
     else{
         currentFace = FacePoints();
+        onFoundCustomer(QString());
     }
 
     drawCircles(frame, currentPointsSet);
@@ -160,6 +164,17 @@ void MainWindow::onAddNewFrame()
     if(currentPointsSet && !currentPointsSet->empty()){
         emit addFrame(currentPointsSet);
     }
+}
+
+void MainWindow::onFoundCustomer(QString name)
+{
+    if(!name.isEmpty()){
+        lFoundName.setText(name);
+    }
+    else{
+        lFoundName.setText("undefined");
+    }
+    qDebug() << name;
 }
 
 void MainWindow::drawFrame(const cv::Mat frame)
